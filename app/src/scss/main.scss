@@ -1,0 +1,61 @@
+@import "./partial/colors";
+// Bootrap imports
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/utilities";
+
+// Custom utilities
+@import "./partial/custom-utilities";
+
+@import "bootstrap/bootstrap";
+
+.ls-none {
+	list-style: none;
+}
+.cursor-pointer {
+	cursor: pointer !important;
+}
+.text-overflow {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.overflow-hidden {
+	overflow: hidden !important;
+}
+.overflow-x-hidden {
+	overflow-x: hidden !important;
+}
+.overflow-y-hidden {
+	overflow-y: hidden !important;
+}
+.td-none,
+.td-none * {
+	text-decoration: none !important;
+}
+.fw-medium {
+	font-weight: 500 !important;
+}
+input:focus,
+input:active {
+	outline: none !important;
+}
+/**
+*	Buttons
+**/
+.btn-primary {
+	&:hover {
+		background-color: shade-color($primary, 15%);
+	}
+}
+.btn {
+	font-weight: 500;
+}
+.modal-backdrop {
+	background-color: rgba(0, 0, 0, 0.7) !important;
+	backdrop-filter: blur(5px) !important;
+	&.show {
+		opacity: 1 !important;
+	}
+}

@@ -1,0 +1,15 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:root@localhost:8889/comfort_projects"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+    id        Int      @id @unique() @default(autoincrement())
+    createdAt DateTime @default(now())
+    refreshToken String
+    mail String @unique()
+}

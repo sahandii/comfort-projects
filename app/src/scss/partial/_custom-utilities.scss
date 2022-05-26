@@ -1,0 +1,34 @@
+$all-colors: map-merge-multiple($limegreens, $grays);
+
+$utilities: map-merge(
+	$utilities,
+	(
+		"z-index": (
+			property: z-index,
+			class: zi,
+			values: (
+				-1,
+				0,
+				1,
+				10,
+				99,
+			),
+		),
+		"color":
+			map-merge(
+				map-get($utilities, "color"),
+				(
+					values: map-merge(map-get(map-get($utilities, "color"), "values"), ($all-colors)),
+				)
+			),
+		"background-color":
+			map-merge(
+				map-get($utilities, "background-color"),
+				(
+					values: map-merge(map-get(map-get($utilities, "background-color"), "values"), ($all-colors)),
+				)
+			),
+	)
+);
+
+@import "../bootstrap/utilities/api";
