@@ -15,6 +15,7 @@ export const Auth = () => {
 			body: JSON.stringify({
 				"code": token
 			}),
+			credentials: 'include',
 			redirect: 'follow'
 		};
 
@@ -22,7 +23,8 @@ export const Auth = () => {
 			.then(response => response.json())
 			.catch(_ => false)
 			.then(d => {
-				if(!d?.error)
+				console.log("Hmm", d);
+				if(d &&! d.error)
 				{
 					navigate("/client");
 				}else{

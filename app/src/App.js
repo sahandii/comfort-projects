@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Pages
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import StartPage from "./pages/StartPage/StartPage";
+import ClientPage from "./pages/ClientPage/ClientPage";
 import { Auth } from "./pages/Auth/Auth";
 // Global CSS
 import { createGlobalStyle } from "styled-components";
@@ -49,9 +50,7 @@ const App = () => {
 						<Routes>
 							<Route path="*" element={<WelcomePage auth={"test"} user={user} />} />
 							<Route exact path="auth/:token" element={<Auth />} />
-							<Route exact path="client" element={<div>
-								<button>Yo</button>
-							</div>} />
+							<Route exact path="client" element={<ClientPage/>} />
 						</Routes>
 					</BrowserRouter>
 				</div>

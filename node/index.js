@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import session from "express-session";
 import bodyparser from "body-parser";
 import cookieParser from "cookie-parser";
-import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 
 // Routes
@@ -19,7 +18,7 @@ app.use(
 	session({
 		secret: "keyboard cat",
 		saveUninitialized: true,
-		cookie: { maxAge: oneDay },
+		cookie: { maxAge: oneDay, secure: false },
 		resave: false,
 	}),
 );
