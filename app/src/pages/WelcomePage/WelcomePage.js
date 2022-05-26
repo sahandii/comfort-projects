@@ -1,17 +1,8 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
-function WelcomePage(props) {
-	let navigate = useNavigate();
-	const handleLogin = async () => {
-		try {
-			const provider = new GoogleAuthProvider();
-			await signInWithPopup(props.auth, provider);
-			navigate("./projects");
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
+import { CONFIG_SERVER } from "../../config";
+
+const endpoint = CONFIG_SERVER + "/authorize";
+function WelcomePage() {
 
 	return (
 		<>
@@ -31,7 +22,7 @@ function WelcomePage(props) {
 								</h6>
 							</div>
 							<h5 className="mt-4 fw-light white lh-base">Creative studio based in Copenhagen, working with clients in both cultural and commercial fields.</h5>
-							<a href={`https://connect.visma.com/connect/authorize?client_id=isv_comfortoasisaps&response_mode=form_post&response_type=code&scope=openid+email+profile+dineropublicapi:read+dineropublicapi:write+offline_access&redirect_uri=https://840e-212-97-249-50.eu.ngrok.io/authorize&ui_locales=da-DK`} className="mt-4 btn btn-lg btn-primary p-3 px-4">
+							<a href={`https://connect.visma.com/connect/authorize?client_id=isv_comfortoasisaps&response_mode=form_post&response_type=code&scope=openid+email+profile+dineropublicapi:read+dineropublicapi:write+offline_access&redirect_uri=${endpoint}&ui_locales=da-DK`} className="mt-4 btn btn-lg btn-primary p-3 px-4">
 								Sign in
 							</a>
 						</div>

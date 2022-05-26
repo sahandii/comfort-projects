@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// Hooks
-import { useFetch } from "usehooks-ts";
 // Pages
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import StartPage from "./pages/StartPage/StartPage";
@@ -39,9 +37,9 @@ const App = () => {
 	// onAuthStateChanged(auth, (currentUser) => {
 	// 	setUser(currentUser);
 	// });
-	const { data, error } = useFetch("https://840e-212-97-249-50.eu.ngrok.io/test", {
-		credentials: "include",
-	});
+	// const { data, error } = useFetch("https://840e-212-97-249-50.eu.ngrok.io/test", {
+	// 	credentials: "include",
+	// });
 	return (
 		<>
 			<GlobalStyles />
@@ -51,6 +49,9 @@ const App = () => {
 						<Routes>
 							<Route path="*" element={<WelcomePage auth={"test"} user={user} />} />
 							<Route exact path="auth/:token" element={<Auth />} />
+							<Route exact path="client" element={<div>
+								<button>Yo</button>
+							</div>} />
 						</Routes>
 					</BrowserRouter>
 				</div>

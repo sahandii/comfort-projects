@@ -1,24 +1,35 @@
-import { useState } from "react";
-// Hooks
-import { useParams } from "react-router-dom";
-import { useFetch } from "usehooks-ts";
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { CONFIG_API_SERVER } from "../../config";
 
-export const Auth = (props) => {
+export const Auth = () => {
 	let { token } = useParams();
+	const navigate = useNavigate();
 
-	// console.log(token);
-	// const { data, error } = useFetch("http://localhost:3001/signIn", {
-	// 	body: JSON.stringify({
-	// 		code: token,
-	// 	}),
-	// 	header: {
-	// 		"Content-Type": "application/json",
-	// 	},
-	// 	method: "POST",
-	// });
-	return (
-		<>
-			<div>Auth</div>
-		</>
-	);
+	useEffect(() => {
+		var requestOptions = {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				"code": token
+			}),
+			redirect: 'follow'
+		};
+
+		fetch(CONFIG_API_SERVER + "/signIn", requestOptions)
+			.then(response => response.json())
+			.catch(_ => false)
+			.then(d => {
+				if(!d?.error)
+				{
+					navigate("/client");
+				}else{
+					navigate("/");
+				}
+			});
+	}, [token]);
+
+	return null;
 };

@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { CONFIG_SERVER, CONFIG_CLIENT_SERVER } from "../config.js";
+// import { PrismaClient } from "@prisma/client";
+// const prisma = new PrismaClient();
 
 const vismaAPI = (url, body, headers = {}) => {
 	var requestOptions = {
@@ -13,6 +14,8 @@ const vismaAPI = (url, body, headers = {}) => {
 		redirect: "follow",
 	};
 
+	console.log("Visma API", "https://connect.visma.com/" + url, requestOptions);
+
 	return fetch("https://connect.visma.com/" + url, requestOptions)
 		.then((response) => response.json())
 		.catch((error) => false);
@@ -21,10 +24,10 @@ const vismaAPI = (url, body, headers = {}) => {
 const fetchAccessToken = (code) => {
 	const data = new URLSearchParams();
 	data.append("grant_type", "authorization_code");
-	data.append("redirect_uri", "https://840e-212-97-249-50.eu.ngrok.io/authorize");
+	data.append("redirect_uri", CONFIG_SERVER + "authorize");
 	data.append("code", code);
 	data.append("client_id", "isv_comfortoasisaps");
-	data.append("client_secret", process.env.VISMA_CLIENT_SECRET);
+	data.append("client_secret", CONFIG_CLIENT_SERVER);
 
 	return vismaAPI("connect/token", data);
 };
@@ -38,8 +41,7 @@ export const signIn = async (req, res, next) => {
 	console.log("WTf bro", req.body);
 	console.log("Fetching code –", req.body.code);
 	const data = await fetchAccessToken(req.body.code);
-	console.log("Using fetched code to generate JWT");
-	console.log("Access token (JWT) generated and recieved –", data);
+	console.log("Access token (JWT) recieved –", data);
 
 	const userInfo = await getUserInfo(data.access_token);
 	console.log("Userinfo", userInfo);
@@ -50,22 +52,22 @@ export const signIn = async (req, res, next) => {
 		mail: userInfo.email,
 		refreshToken: data.refresh_token,
 	};
-	await prisma.user.upsert({
-		where: {
-			mail: userInfo.email,
-		},
-		update: info,
-		create: info,
-	});
+	// await prisma.user.upsert({
+	// 	where: {
+	// 		mail: userInfo.email,
+	// 	},
+	// 	update: info,
+	// 	create: info,
+	// });
 
-	await prisma.user.update({
-		where: {
-			mail: userInfo.email,
-		},
-		data: {
-			refreshToken: data.refresh_token,
-		},
-	});
+	// await prisma.user.update({
+	// 	where: {
+	// 		mail: userInfo.email,
+	// 	},
+	// 	data: {
+	// 		refreshToken: data.refresh_token,
+	// 	},
+	// });
 	// Return to client
 	res.send({
 		error: false,
