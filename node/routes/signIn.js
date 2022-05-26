@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { CONFIG_SERVER, CONFIG_CLIENT_SERVER } from "../config.js";
-// import { PrismaClient } from "@prisma/client";
-// const prisma = new PrismaClient();
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 const vismaAPI = (url, body, headers = {}) => {
 	var requestOptions = {
@@ -56,22 +56,22 @@ export const signIn = async (req, res, next) => {
 			mail: userInfo.email,
 			refreshToken: data.refresh_token,
 		};
-		// await prisma.user.upsert({
-		// 	where: {
-		// 		mail: userInfo.email,
-		// 	},
-		// 	update: info,
-		// 	create: info,
-		// });
+		await prisma.user.upsert({
+			where: {
+				mail: userInfo.email,
+			},
+			update: info,
+			create: info,
+		});
 
-		// await prisma.user.update({
-		// 	where: {
-		// 		mail: userInfo.email,
-		// 	},
-		// 	data: {
-		// 		refreshToken: data.refresh_token,
-		// 	},
-		// });
+		await prisma.user.update({
+			where: {
+				mail: userInfo.email,
+			},
+			data: {
+				refreshToken: data.refresh_token,
+			},
+		});
 		error = false;
 	}
 	res.send({

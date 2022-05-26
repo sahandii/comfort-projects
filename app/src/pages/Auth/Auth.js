@@ -23,7 +23,6 @@ export const Auth = () => {
 			.then(response => response.json())
 			.catch(_ => false)
 			.then(d => {
-				console.log("Hmm", d);
 				if(d &&! d.error)
 				{
 					navigate("/client");
